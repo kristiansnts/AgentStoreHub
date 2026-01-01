@@ -14,3 +14,14 @@ export interface Agent {
 }
 
 export type ViewState = 'onboarding' | 'home' | 'detail' | 'profile' | 'dashboard' | 'create-agent' | 'auth';
+
+export type FlowStep = 'free-confirm' | 'activate-agent' | 'payment-confirm' | 'success';
+
+export interface SubscriptionData {
+  planName: string;
+  price: number;
+  isFree: boolean;
+  agentName: string;
+  phoneNumber?: string;
+  platform?: 'WhatsApp' | 'Telegram' | 'G-Chat';
+}
