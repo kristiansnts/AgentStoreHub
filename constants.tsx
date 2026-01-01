@@ -85,3 +85,10 @@ export const MOCK_AGENTS: Agent[] = [
 ];
 
 export const CATEGORIES = ['All', 'Productivity', 'Writing', 'Coding', 'Lifestyle', 'Finance', 'Business'];
+
+export const IMAGES = {
+  USER_AVATAR: "https://lh3.googleusercontent.com/aida-public/AB6AXuDHIlKOuF-iVIAfPBmrxQYbHWFw2uUp0JqYUqDcaSwT3CcrM4QAOaFbnSCxkwzeWegvarjS7UQUL6_AUJMAeayxaBkMlJfkZZ-eDX2Une13AOvQq-ZkvsLnq_VMqsOc6YedQuDGKhAwYblJQO_aATkUNAPiDOTtopBCgkbw6s3Dp2KOcqKEAUIySvRzlHjzZxpTgaivQnU8KNXSnp1kn2JdusJrPC5JxS9AJZaKngxl1F0J_uDmPQt_d48mIUQwArKvqMwq6rEtM4M",
+  COPYWRITER_ICON: "https://lh3.googleusercontent.com/aida-public/AB6AXuDleDIv0i6-ld3ULubhn1OKZEpjA5w2Zp7jRiQPsgwDLnT-StZ7yyoLzn_6Q1SEPC2oZ32yGDh4WWWqkFSFDnQYbpzDFSyAQ08p1tztNQJ3FPjye7rTYkjoEYrS3NSbPA7irHD1KOJ4EBBp6pPbIr6nkc675uZyZJfN_4fskf-M5cNKRH9cFnsx1KlDE36GQbcZcutuOQR4GjfWbq9C_PLB0SdVqh2O72TIeUaU3YhNSb0cLnY4u2_syVBADDvZwpNXzn5gcV5p4x0",
+  PYTHON_DEBUGGER_ICON: "https://lh3.googleusercontent.com/aida-public/AB6AXuAaSO9oOutW3sRkXSljQZhJsLc1u2C2jiB-Qp-Qv1VVcwYOzUWNTr9Xy-H_FqCyC1tvshhpqKkfeRwybeHhUVmneh0UpyL22YWjs1YDMBn3OWxxUDfxgMPZQdqk9HUwIIZiBsirv8juUNRZwQe2gMbsOi1elNhtLp-VkXj4Sze9hU88iSPku4roABe74AlXMDSe7GpOZYHP3BM-AUpTbISM5JvHgHRBCtSnFjjMpdkdYiPX9x5bxDUVT2hVXrWWJIADUHVQK5oV_pI",
+  SMALL_AVATAR: "https://lh3.googleusercontent.com/aida-public/AB6AXuBBrGOiip5eJoAjorxZN-GQ3kFDdU8O0zvTCc1lB-dFw-wliPgPEc6FUg5UPfCAUIC0QA8MUP6vX7qSrxsD345_d6DMBSi3MP9GBpOi7345OQsviB6wQBPJ7-Nare5M3t1X0ZLA51KMFnk60G2zMVvEXYFMQy_hOP0fZTfDSjWS-dCxpXOJLEfdyObOOWVlQQPKJB2mgyQpPU4I-hRqrEkXvqIPi1L2-2xVQAJVZco0gUfscBc_6_wbimEJSf9DWibF4QkB14ScWFI"
+};

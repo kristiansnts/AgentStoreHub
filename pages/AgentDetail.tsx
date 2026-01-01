@@ -8,7 +8,7 @@ interface AgentDetailProps {
   onSubscribe: (agent: any) => void;
 }
 
-const AgentDetail: React.FC<AgentDetailProps> = ({ onSubscribe }) => {
+const AgentDetail = ({ onSubscribe }: AgentDetailProps) => {
   const { id } = useParams();
   const navigate = useNavigate();
   const agent = MOCK_AGENTS.find(a => a.id === id);

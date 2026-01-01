@@ -38,3 +38,20 @@ export interface SubscriptionData {
   phoneNumber?: string;
   platform?: 'WhatsApp' | 'Telegram' | 'G-Chat';
 }
+
+export enum ViewType {
+  PROFILE = 'profile',
+  DASHBOARD = 'dashboard',
+  APPLICATION = 'application',
+  SUCCESS = 'success',
+  HOME = 'home',
+  CATEGORIES = 'categories',
+  FAVORITES = 'favorites'
+}
+
+export interface User {
+  name: string;
+  email: string;
+  isCreator: boolean;
+  avatarUrl: string;
+}
