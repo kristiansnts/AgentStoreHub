@@ -1,7 +1,8 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import Icon from '../Icon';
 import { AgentFormData } from './types';
+import WhatsAppSetup from '../WhatsAppSetup';
 
 interface Props {
   data: AgentFormData;
@@ -9,6 +10,8 @@ interface Props {
 }
 
 const Step3Capabilities: React.FC<Props> = ({ data, onUpdate }) => {
+  const [showWhatsAppSetup, setShowWhatsAppSetup] = useState(false);
+
   const removeCapability = (cap: string) => {
     onUpdate({ capabilities: data.capabilities.filter(c => c !== cap) });
   };
@@ -93,7 +96,7 @@ const Step3Capabilities: React.FC<Props> = ({ data, onUpdate }) => {
               </div>
             </div>
             <button
-              onClick={() => onUpdate({ whatsappConnected: !data.whatsappConnected })}
+              onClick={() => setShowWhatsAppSetup(true)}
               className={`w-full py-3 px-4 rounded-xl transition-all flex items-center justify-center gap-2 text-sm font-semibold ${data.whatsappConnected ? 'bg-green-500/10 text-green-500' : 'bg-primary/10 hover:bg-primary/20 text-primary'}`}
             >
               <Icon name={data.whatsappConnected ? 'check_circle' : 'link'} className="text-lg" />
@@ -101,6 +104,22 @@ const Step3Capabilities: React.FC<Props> = ({ data, onUpdate }) => {
             </button>
           </div>
         </div>
+
+        {/* WhatsApp Setup Modal */}
+        {showWhatsAppSetup && (
+          <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/50 backdrop-blur-sm">
+            <div className="w-full max-w-md h-[90vh] bg-white dark:bg-background-dark rounded-2xl overflow-hidden shadow-2xl">
+              <WhatsAppSetup
+                onComplete={(setupData) => {
+                  console.log('WhatsApp setup complete:', setupData);
+                  onUpdate({ whatsappConnected: true });
+                  setShowWhatsAppSetup(false);
+                }}
+                onClose={() => setShowWhatsAppSetup(false)}
+              />
+            </div>
+          </div>
+        )}
 
         <div>
           <label className="block mb-2 text-sm font-medium text-text-main-light dark:text-gray-200 px-2">Telegram Username / Phone Number</label>

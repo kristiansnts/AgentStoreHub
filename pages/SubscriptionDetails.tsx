@@ -1,12 +1,15 @@
 
 import React, { useState } from 'react';
 import Modal from '../components/Modal';
-
+import SubscriptionManager from '../components/SubscriptionManager';
+import Icon from '../components/Icon';
 import { useNavigate } from 'react-router-dom';
 
 const SubscriptionDetails: React.FC = () => {
     const navigate = useNavigate();
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [showPlanManager, setShowPlanManager] = useState(false);
+    const [currentPlan, setCurrentPlan] = useState('basic');
 
     return (
         <div className="animate-in fade-in slide-in-from-right-4 duration-300 bg-gray-50 dark:bg-black min-h-screen">
@@ -15,7 +18,7 @@ const SubscriptionDetails: React.FC = () => {
                     onClick={() => navigate(-1)}
                     className="text-gray-900 dark:text-white flex size-12 shrink-0 items-center justify-center rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-all"
                 >
-                    <span className="material-symbols-outlined">arrow_back</span>
+                    <Icon name="arrow_back" />
                 </button>
                 <h2 className="text-gray-900 dark:text-white text-lg font-bold leading-tight tracking-tight flex-1 text-center pr-12">Subscription Details</h2>
             </header>
@@ -51,12 +54,15 @@ const SubscriptionDetails: React.FC = () => {
                             style={{ backgroundImage: `url("https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg")` }}
                         ></div>
                         <p className="text-gray-900 dark:text-white text-base font-medium flex-1 truncate">Visa ending in ... 1234</p>
-                        <span className="material-symbols-outlined text-gray-400">chevron_right</span>
+                        <Icon name="chevron_right" className="text-gray-400" />
                     </div>
                 </section>
 
                 <div className="flex flex-col gap-3 pt-4">
-                    <button className="flex items-center justify-center rounded-full h-12 bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white text-base font-bold active:scale-95 transition-all shadow-sm">
+                    <button
+                        onClick={() => setShowPlanManager(true)}
+                        className="flex items-center justify-center rounded-full h-12 bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white text-base font-bold active:scale-95 transition-all shadow-sm"
+                    >
                         Change Plan
                     </button>
                     <button
@@ -80,6 +86,21 @@ const SubscriptionDetails: React.FC = () => {
                 confirmLabel="Unsubscribe"
                 confirmColor="bg-red-600"
             />
+
+            {/* Subscription Manager Modal */}
+            {showPlanManager && (
+                <div className="fixed inset-0 z-50 bg-white dark:bg-background-dark">
+                    <SubscriptionManager
+                        currentPlanId={currentPlan}
+                        agentName="Code Reviewer"
+                        onPlanChange={(newPlanId) => {
+                            setCurrentPlan(newPlanId);
+                            alert(`Plan changed to ${newPlanId}!`);
+                        }}
+                        onClose={() => setShowPlanManager(false)}
+                    />
+                </div>
+            )}
         </div>
     );
 };
