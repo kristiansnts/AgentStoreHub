@@ -89,6 +89,25 @@ const Profile: React.FC<ProfileProps> = ({ onBack, onNavigate }) => {
           </div>
         </div>
 
+        {/* Security */}
+        <div className="mt-6">
+          <h3 className="mb-3 ml-2 text-sm font-bold uppercase tracking-wider text-text-sub">Security</h3>
+          <div className="flex flex-col overflow-hidden rounded-2xl bg-white dark:bg-gray-900 shadow-sm border border-gray-100 dark:border-gray-800">
+            <button onClick={() => onNavigate('change-password')} className="flex w-full items-center justify-between p-4 hover:bg-gray-50 active:bg-gray-100 transition-colors text-left group">
+              <div className="flex items-center gap-4">
+                <div className="size-12 flex items-center justify-center rounded-xl bg-orange-100 text-orange-600">
+                  <Icon name="lock" className="text-[24px]" />
+                </div>
+                <div className="flex flex-col">
+                  <span className="text-base font-bold text-text-main dark:text-white group-hover:text-primary transition-colors">Change Password</span>
+                  <span className="text-xs text-text-sub">Update your account password</span>
+                </div>
+              </div>
+              <Icon name="chevron_right" className="text-gray-400" />
+            </button>
+          </div>
+        </div>
+
         {/* Creator Studio CTA */}
         <div className="mt-6">
           <h3 className="mb-3 ml-2 text-sm font-bold uppercase tracking-wider text-text-sub">Creator Studio</h3>

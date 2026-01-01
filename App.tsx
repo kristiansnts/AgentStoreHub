@@ -14,10 +14,19 @@ import StepFreeConfirm from './components/SubscriptionFlow/StepFreeConfirm';
 import StepActivateAgent from './components/SubscriptionFlow/StepActivateAgent';
 import StepPayment from './components/SubscriptionFlow/StepPayment';
 import StepSuccess from './components/SubscriptionFlow/StepSuccess';
+import Welcome from './pages/Welcome';
+import Login from './pages/Login';
+import SignUp from './pages/SignUp';
+import ForgotPassword from './pages/ForgotPassword';
+import CheckEmail from './pages/CheckEmail';
+import SetNewPassword from './pages/SetNewPassword';
+import PasswordSuccess from './pages/PasswordSuccess';
+import ChangePassword from './pages/ChangePassword';
 
 const App: React.FC = () => {
-  const [view, setView] = useState<ViewState>('onboarding');
+  const [view, setView] = useState<ViewState>('welcome');
   const [selectedAgent, setSelectedAgent] = useState<Agent | null>(null);
+  const [authEmail, setAuthEmail] = useState('user@example.com');
   const [showSubscriptionModal, setShowSubscriptionModal] = useState(false);
   const [subscriptionStep, setSubscriptionStep] = useState<FlowStep>('free-confirm');
   const [subscriptionData, setSubscriptionData] = useState<SubscriptionData>({
@@ -44,34 +53,29 @@ const App: React.FC = () => {
   const renderView = () => {
     switch (view) {
       case 'onboarding':
-        return (
-          <div className="flex flex-col h-full bg-white dark:bg-[#0f1623] animate-in fade-in duration-700">
-            <div className="flex-1 flex flex-col items-center justify-center p-6 gap-12">
-              <div className="relative group">
-                <div className="absolute inset-0 bg-primary/20 rounded-[32px] blur-3xl scale-150 animate-pulse" />
-                <div className="relative size-36 rounded-[32px] bg-gradient-to-br from-primary to-indigo-500 shadow-2xl flex items-center justify-center text-white -rotate-3 hover:rotate-0 transition-transform duration-500">
-                  <Icon name="smart_toy" style={{ fontSize: 80 }} />
-                </div>
-              </div>
-              <div className="text-center space-y-4">
-                <h1 className="text-4xl font-black tracking-tight leading-tight">
-                  Welcome to <br /><span className="text-primary">AgentStore</span>
-                </h1>
-                <p className="text-text-sub dark:text-gray-400 text-lg font-medium max-w-[300px] mx-auto leading-relaxed">
-                  The marketplace for AI agents. Discover, deploy, and automate your workflow.
-                </p>
-              </div>
-            </div>
-            <div className="p-6 pb-12 flex flex-col gap-3">
-              <Button onClick={() => setView('home')} className="w-full py-4 h-auto text-lg shadow-primary/30">
-                Log In
-              </Button>
-              <Button onClick={() => setView('home')} variant="secondary" className="w-full py-4 h-auto text-lg text-primary">
-                Sign Up
-              </Button>
-            </div>
-          </div>
-        );
+      case 'welcome':
+        return <Welcome onNavigate={setView} />;
+
+      case 'login':
+        return <Login onNavigate={setView} />;
+
+      case 'signup':
+        return <SignUp onNavigate={setView} />;
+
+      case 'forgot-password':
+        return <ForgotPassword onNavigate={setView} onSetEmail={setAuthEmail} />;
+
+      case 'check-email':
+        return <CheckEmail onNavigate={setView} email={authEmail} />;
+
+      case 'set-new-password':
+        return <SetNewPassword onNavigate={setView} />;
+
+      case 'password-success':
+        return <PasswordSuccess onNavigate={setView} />;
+
+      case 'change-password':
+        return <ChangePassword onNavigate={setView} />;
 
       case 'home':
         return <Home onSelectAgent={(agent) => { setSelectedAgent(agent); setView('detail'); }} />;
