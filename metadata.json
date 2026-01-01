@@ -1,0 +1,5 @@
+{
+  "name": "AgentStore",
+  "description": "A premium marketplace for discovering, deploying, and managing AI agents across various platforms like WhatsApp, Telegram, and Google Chat.",
+  "requestFramePermissions": []
+}
