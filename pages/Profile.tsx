@@ -26,10 +26,10 @@ const Profile: React.FC<ProfileProps> = ({ onBack, onNavigate }) => {
         <section className="flex flex-col items-center gap-4 py-8">
           <div className="relative group">
             <div className="h-28 w-28 overflow-hidden rounded-full shadow-xl ring-4 ring-white transition-transform group-hover:scale-105">
-              <img 
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDHIlKOuF-iVIAfPBmrxQYbHWFw2uUp0JqYUqDcaSwT3CcrM4QAOaFbnSCxkwzeWegvarjS7UQUL6_AUJMAeayxaBkMlJfkZZ-eDX2Une13AOvQq-ZkvsLnq_VMqsOc6YedQuDGKhAwYblJQO_aATkUNAPiDOTtopBCgkbw6s3Dp2KOcqKEAUIySvRzlHjzZxpTgaivQnU8KNXSnp1kn2JdusJrPC5JxS9AJZaKngxl1F0J_uDmPQt_d48mIUQwArKvqMwq6rEtM4M" 
-                className="w-full h-full object-cover" 
-                alt="Avatar" 
+              <img
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDHIlKOuF-iVIAfPBmrxQYbHWFw2uUp0JqYUqDcaSwT3CcrM4QAOaFbnSCxkwzeWegvarjS7UQUL6_AUJMAeayxaBkMlJfkZZ-eDX2Une13AOvQq-ZkvsLnq_VMqsOc6YedQuDGKhAwYblJQO_aATkUNAPiDOTtopBCgkbw6s3Dp2KOcqKEAUIySvRzlHjzZxpTgaivQnU8KNXSnp1kn2JdusJrPC5JxS9AJZaKngxl1F0J_uDmPQt_d48mIUQwArKvqMwq6rEtM4M"
+                className="w-full h-full object-cover"
+                alt="Avatar"
               />
             </div>
             <button className="absolute bottom-0 right-0 size-8 flex items-center justify-center rounded-full bg-white dark:bg-gray-800 text-text-main shadow-md ring-2 ring-white hover:bg-gray-50 transition-colors">
@@ -74,7 +74,7 @@ const Profile: React.FC<ProfileProps> = ({ onBack, onNavigate }) => {
         <div className="mt-6">
           <h3 className="mb-3 ml-2 text-sm font-bold uppercase tracking-wider text-text-sub">Subscriptions</h3>
           <div className="flex flex-col overflow-hidden rounded-2xl bg-white dark:bg-gray-900 shadow-sm border border-gray-100 dark:border-gray-800">
-            <button className="flex w-full items-center justify-between p-4 hover:bg-gray-50 active:bg-gray-100 transition-colors text-left group">
+            <button onClick={() => onNavigate('library')} className="flex w-full items-center justify-between p-4 hover:bg-gray-50 active:bg-gray-100 transition-colors text-left group">
               <div className="flex items-center gap-4">
                 <div className="size-12 flex items-center justify-center rounded-xl bg-pink-100 text-pink-600">
                   <Icon name="card_membership" className="text-[24px]" />

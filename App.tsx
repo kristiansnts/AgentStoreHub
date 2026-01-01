@@ -6,6 +6,8 @@ import Home from './pages/Home';
 import Profile from './pages/Profile';
 import AgentDetail from './pages/AgentDetail';
 import CreatorDashboard from './pages/CreatorDashboard';
+import Library from './pages/Library';
+import SubscriptionDetails from './pages/SubscriptionDetails';
 import Button from './components/Button';
 import Icon from './components/Icon';
 import StepFreeConfirm from './components/SubscriptionFlow/StepFreeConfirm';
@@ -95,8 +97,16 @@ const App: React.FC = () => {
       case 'profile':
         return <Profile onBack={() => setView('home')} onNavigate={setView} />;
 
+
       case 'dashboard':
         return <CreatorDashboard onBack={() => setView('profile')} />;
+
+      case 'library':
+        return <Library onBack={() => setView('profile')} onNavigate={setView} />;
+
+      case 'subscription-details':
+        return <SubscriptionDetails onBack={() => setView('library')} />;
+
 
       default:
         return <Home onSelectAgent={(agent) => { setSelectedAgent(agent); setView('detail'); }} />;

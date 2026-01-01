@@ -13,7 +13,20 @@ export interface Agent {
   description: string;
 }
 
-export type ViewState = 'onboarding' | 'home' | 'detail' | 'profile' | 'dashboard' | 'create-agent' | 'auth';
+export interface AIAgent {
+  id: string;
+  name: string;
+  category: string;
+  description: string;
+  imageUrl: string;
+  rating?: number;
+  reviewsCount?: string;
+  price?: string;
+  status?: 'Active' | 'Free' | 'Pending';
+  renewalDate?: string;
+}
+
+export type ViewState = 'onboarding' | 'home' | 'detail' | 'profile' | 'dashboard' | 'create-agent' | 'auth' | 'library' | 'subscription-details';
 
 export type FlowStep = 'free-confirm' | 'activate-agent' | 'payment-confirm' | 'success';
 
