@@ -46,7 +46,8 @@ export enum ViewType {
   SUCCESS = 'success',
   HOME = 'home',
   CATEGORIES = 'categories',
-  FAVORITES = 'favorites'
+  FAVORITES = 'favorites',
+  CREATE_AGENT = 'create-agent'
 }
 
 export interface User {

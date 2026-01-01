@@ -6,6 +6,9 @@ import { ViewType, User } from '../types';
 import { IMAGES, MY_AGENTS } from '../constants';
 import ApplicationView from '../components/CreatorHub/ApplicationView';
 import SuccessView from '../components/CreatorHub/SuccessView';
+import AgentConfigurator from '../components/AgentConfigurator';
+import { ApiSection } from '../components/CreatorDashboard/ApiSection';
+import { StatCard } from '../components/CreatorDashboard/StatCard';
 
 const CreatorDashboard: React.FC = () => {
   const navigate = useNavigate();
@@ -33,45 +36,40 @@ const CreatorDashboard: React.FC = () => {
       case ViewType.DASHBOARD: return 'Creator Dashboard';
       case ViewType.APPLICATION: return 'Creator Application';
       case ViewType.SUCCESS: return 'Application Status';
+      case ViewType.CREATE_AGENT: return 'Create New Agent';
       default: return 'Nexus AI';
     }
   };
 
   // Render Dashboard Content (extracted from original)
   const renderDashboard = () => (
-    <div className="flex flex-col gap-6 pb-24 no-scrollbar overflow-y-auto">
+    <div className="flex flex-col gap-6 pb-24 no-scrollbar overflow-y-auto px-4">
       {/* Stats Grid */}
-      <div className="grid grid-cols-2 gap-3">
-        <div className="bg-white dark:bg-gray-900 p-5 rounded-2xl shadow-sm border border-gray-50 dark:border-gray-800">
-          <div className="flex items-center gap-2 mb-3">
-            <div className="size-8 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center">
-              <Icon name="attach_money" className="text-lg" />
-            </div>
-            <span className="text-xs font-bold text-gray-500 uppercase">Revenue</span>
-          </div>
-          <div className="flex items-end justify-between">
-            <span className="text-2xl font-bold">$1,240<span className="text-base opacity-40 font-normal">.50</span></span>
-            <span className="text-xs font-bold text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded-md flex items-center gap-0.5">
-              <Icon name="trending_up" className="text-[10px]" /> 12%
-            </span>
-          </div>
+      <div>
+        <div className="flex items-center justify-between mb-3 px-1">
+          <h3 className="text-lg font-bold">Performance Overview</h3>
+          <button className="text-primary text-sm font-bold">View All</button>
         </div>
-
-        <div className="bg-white dark:bg-gray-900 p-5 rounded-2xl shadow-sm border border-gray-50 dark:border-gray-800">
-          <div className="flex items-center gap-2 mb-3">
-            <div className="size-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center">
-              <Icon name="group" className="text-lg" />
-            </div>
-            <span className="text-xs font-bold text-gray-500 uppercase">Users</span>
-          </div>
-          <div className="flex items-end justify-between">
-            <span className="text-2xl font-bold">8.5k</span>
-            <span className="text-xs font-bold text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded-md flex items-center gap-0.5">
-              <Icon name="trending_up" className="text-[10px]" /> 5%
-            </span>
-          </div>
+        <div className="grid grid-cols-2 gap-3">
+          <StatCard
+            id="revenue"
+            label="Revenue (30d)"
+            value="$1,240"
+            icon="attach_money"
+            color="emerald"
+          />
+          <StatCard
+            id="users"
+            label="Total Subscribers"
+            value="8.5k"
+            icon="group"
+            color="blue"
+          />
         </div>
       </div>
+
+      {/* API Access Section */}
+      <ApiSection />
 
       {/* Alerts Horizontal Scroll */}
       <div>
@@ -128,7 +126,10 @@ const CreatorDashboard: React.FC = () => {
         </div>
       </div>
 
-      <button className="fixed bottom-24 right-4 z-40 size-14 rounded-full bg-primary shadow-2xl shadow-primary/40 text-white flex items-center justify-center hover:scale-105 active:scale-95 transition-all">
+      <button
+        onClick={() => setActiveView(ViewType.CREATE_AGENT)}
+        className="fixed bottom-24 right-4 z-40 size-14 rounded-full bg-primary shadow-2xl shadow-primary/40 text-white flex items-center justify-center hover:scale-105 active:scale-95 transition-all"
+      >
         <Icon name="add" className="text-2xl" />
       </button>
     </div>
@@ -147,7 +148,7 @@ const CreatorDashboard: React.FC = () => {
 
         {/* Toggle View for Demo Purposes or Header Actions */}
         {activeView === ViewType.DASHBOARD ? (
-          <Button variant="secondary" className="px-4 py-1.5 h-auto text-sm" onClick={() => setActiveView(ViewType.APPLICATION)}>
+          <Button variant="secondary" className="px-4 py-1.5 h-auto text-sm" onClick={() => setActiveView(ViewType.CREATE_AGENT)}>
             <Icon name="add" className="text-lg mr-1" /> New
           </Button>
         ) : (
@@ -159,6 +160,15 @@ const CreatorDashboard: React.FC = () => {
         {activeView === ViewType.DASHBOARD && renderDashboard()}
         {activeView === ViewType.APPLICATION && <ApplicationView user={user} onSubmit={handleApplicationSubmit} />}
         {activeView === ViewType.SUCCESS && <SuccessView onNavigate={handleNavigate} />}
+        {activeView === ViewType.CREATE_AGENT && (
+          <AgentConfigurator
+            onClose={() => setActiveView(ViewType.DASHBOARD)}
+            onSuccess={(data) => {
+              console.log('Agent created:', data);
+              // You can add logic here to save the agent data
+            }}
+          />
+        )}
       </main>
     </div>
   );

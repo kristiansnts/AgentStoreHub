@@ -14,14 +14,25 @@ export default {
     extend: {
       colors: {
         primary: '#0657f9',
+        'primary-dark': '#0546d9',
         secondary: '#4F46E5',
         background: {
           light: '#f5f6f8',
           dark: '#0f1623'
         },
+        surface: {
+          light: '#ffffff',
+          dark: '#1a1f2e'
+        },
+        border: {
+          light: '#e5e7eb',
+          dark: '#374151'
+        },
         text: {
           main: '#111318',
-          sub: '#5f6e8c'
+          'main-light': '#111318',
+          sub: '#5f6e8c',
+          'sub-light': '#6b7280'
         }
       },
       fontFamily: {
