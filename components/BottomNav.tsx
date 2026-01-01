@@ -1,18 +1,19 @@
 
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import Icon from './Icon';
 
 interface BottomNavProps {
   activeTab: string;
-  onTabChange: (tab: any) => void;
 }
 
-const BottomNav: React.FC<BottomNavProps> = ({ activeTab, onTabChange }) => {
+const BottomNav: React.FC<BottomNavProps> = ({ activeTab }) => {
+  const navigate = useNavigate();
   const tabs = [
-    { id: 'home', label: 'Home', icon: 'home' },
-    { id: 'categories', label: 'Categories', icon: 'grid_view' },
-    { id: 'favorites', label: 'Favorites', icon: 'favorite' },
-    { id: 'profile', label: 'Profile', icon: 'person' },
+    { id: 'home', label: 'Home', icon: 'home', path: '/home' },
+    { id: 'categories', label: 'Categories', icon: 'grid_view', path: '/home' }, // Placeholder
+    { id: 'favorites', label: 'Favorites', icon: 'favorite', path: '/home' }, // Placeholder
+    { id: 'profile', label: 'Profile', icon: 'person', path: '/profile' },
   ];
 
   return (
@@ -21,15 +22,14 @@ const BottomNav: React.FC<BottomNavProps> = ({ activeTab, onTabChange }) => {
         {tabs.map((tab) => (
           <button
             key={tab.id}
-            onClick={() => onTabChange(tab.id === 'profile' ? 'profile' : 'home')}
-            className={`group flex flex-1 flex-col items-center justify-center gap-1 py-2 transition-colors ${
-              activeTab === tab.id ? 'text-primary' : 'text-text-sub'
-            }`}
+            onClick={() => navigate(tab.path)}
+            className={`group flex flex-1 flex-col items-center justify-center gap-1 py-2 transition-colors ${activeTab === tab.id ? 'text-primary' : 'text-text-sub'
+              }`}
           >
-            <Icon 
-              name={tab.icon} 
+            <Icon
+              name={tab.icon}
               filled={activeTab === tab.id}
-              className="text-[24px] transition-transform group-active:scale-90" 
+              className="text-[24px] transition-transform group-active:scale-90"
             />
             <span className="text-[10px] font-bold">{tab.label}</span>
           </button>

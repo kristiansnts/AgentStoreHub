@@ -1,18 +1,17 @@
 
 import React, { useState } from 'react';
 
-interface SetNewPasswordProps {
-  onNavigate: (view: any) => void;
-}
+import { useNavigate } from 'react-router-dom';
 
-const SetNewPassword: React.FC<SetNewPasswordProps> = ({ onNavigate }) => {
+const SetNewPassword: React.FC = () => {
+  const navigate = useNavigate();
   const [showPass, setShowPass] = useState(false);
 
   return (
     <div className="flex flex-col min-h-screen">
       <header className="sticky top-0 z-50 flex items-center justify-between px-4 py-3 bg-white/95 dark:bg-background-dark/95 backdrop-blur-md border-b border-slate-100 dark:border-slate-800">
-        <button 
-          onClick={() => onNavigate('forgot-password')}
+        <button
+          onClick={() => navigate('/forgot-password')}
           className="flex items-center justify-center w-10 h-10 -ml-2 text-slate-900 dark:text-white hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors"
         >
           <span className="material-symbols-outlined text-2xl">arrow_back_ios_new</span>
@@ -40,12 +39,12 @@ const SetNewPassword: React.FC<SetNewPasswordProps> = ({ onNavigate }) => {
           <div className="flex flex-col gap-2">
             <label className="text-sm font-semibold text-slate-900 dark:text-slate-200 ml-1">New Password</label>
             <div className="relative group">
-              <input 
+              <input
                 className="w-full h-14 pl-5 pr-12 bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-lg text-slate-900 dark:text-white placeholder:text-slate-500 focus:ring-2 focus:ring-primary focus:border-primary transition-all outline-none text-base shadow-sm"
                 placeholder="Enter new password"
                 type={showPass ? "text" : "password"}
               />
-              <button 
+              <button
                 type="button"
                 onClick={() => setShowPass(!showPass)}
                 className="absolute right-0 top-0 h-full w-12 flex items-center justify-center text-slate-500 hover:text-slate-700 dark:hover:text-slate-300"
@@ -53,7 +52,7 @@ const SetNewPassword: React.FC<SetNewPasswordProps> = ({ onNavigate }) => {
                 <span className="material-symbols-outlined">{showPass ? "visibility" : "visibility_off"}</span>
               </button>
             </div>
-            
+
             <div className="mt-2 px-1">
               <div className="flex justify-between items-center mb-1.5">
                 <span className="text-xs font-medium text-slate-500 dark:text-slate-400">Password Strength</span>
@@ -95,7 +94,7 @@ const SetNewPassword: React.FC<SetNewPasswordProps> = ({ onNavigate }) => {
           <div className="flex flex-col gap-2">
             <label className="text-sm font-semibold text-slate-900 dark:text-slate-200 ml-1">Confirm New Password</label>
             <div className="relative group">
-              <input 
+              <input
                 className="w-full h-14 pl-5 pr-12 bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-lg text-slate-900 dark:text-white placeholder:text-slate-500 focus:ring-2 focus:ring-primary focus:border-primary transition-all outline-none text-base shadow-sm"
                 placeholder="Re-enter password"
                 type="password"
@@ -106,8 +105,8 @@ const SetNewPassword: React.FC<SetNewPasswordProps> = ({ onNavigate }) => {
       </main>
 
       <div className="fixed bottom-0 left-0 right-0 p-4 bg-white/80 dark:bg-background-dark/80 backdrop-blur-xl border-t border-slate-100 dark:border-slate-800 w-full max-w-md mx-auto">
-        <button 
-          onClick={() => onNavigate('password-success')}
+        <button
+          onClick={() => navigate('/password-success')}
           className="w-full h-14 bg-primary hover:bg-primary-hover active:scale-[0.98] text-white text-lg font-semibold rounded-full shadow-lg shadow-primary/30 transition-all flex items-center justify-center gap-2"
         >
           <span>Update Password</span>

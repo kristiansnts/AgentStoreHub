@@ -1,11 +1,10 @@
 
 import React from 'react';
 
-interface WelcomeProps {
-  onNavigate: (view: any) => void;
-}
+import { useNavigate } from 'react-router-dom';
 
-const Welcome: React.FC<WelcomeProps> = ({ onNavigate }) => {
+const Welcome: React.FC = () => {
+  const navigate = useNavigate();
   return (
     <div className="flex flex-col h-full min-h-screen">
       <div className="flex-1 flex flex-col items-center justify-center p-6 -mt-12">
@@ -18,7 +17,7 @@ const Welcome: React.FC<WelcomeProps> = ({ onNavigate }) => {
 
         <div className="flex flex-col items-center gap-4 text-center animate-fade-in-up">
           <h1 className="text-slate-900 dark:text-white text-4xl font-extrabold leading-tight tracking-tight">
-            Welcome to <br/>
+            Welcome to <br />
             <span className="text-primary">AgentStore</span>
           </h1>
           <p className="text-text-dim dark:text-gray-400 text-lg font-medium leading-relaxed max-w-[300px]">
@@ -28,14 +27,14 @@ const Welcome: React.FC<WelcomeProps> = ({ onNavigate }) => {
       </div>
 
       <div className="p-6 pb-12 w-full flex flex-col gap-3 animate-fade-in-up" style={{ animationDelay: '0.2s', animationFillMode: 'both' }}>
-        <button 
-          onClick={() => onNavigate('login')}
+        <button
+          onClick={() => navigate('/login')}
           className="flex w-full cursor-pointer items-center justify-center rounded-2xl h-14 bg-primary hover:bg-primary-hover active:scale-[0.98] transition-all text-white text-[17px] font-bold tracking-wide shadow-lg shadow-primary/25"
         >
           Log In
         </button>
-        <button 
-          onClick={() => onNavigate('signup')}
+        <button
+          onClick={() => navigate('/signup')}
           className="flex w-full cursor-pointer items-center justify-center rounded-2xl h-14 bg-slate-100 dark:bg-white/10 hover:bg-slate-200 dark:hover:bg-white/20 active:scale-[0.98] transition-all text-primary dark:text-white text-[17px] font-bold tracking-wide"
         >
           Sign Up

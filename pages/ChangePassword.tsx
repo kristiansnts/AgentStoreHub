@@ -1,22 +1,21 @@
 
 import React from 'react';
 
-interface ChangePasswordProps {
-  onNavigate: (view: any) => void;
-}
+import { useNavigate } from 'react-router-dom';
 
-const ChangePassword: React.FC<ChangePasswordProps> = ({ onNavigate }) => {
+const ChangePassword: React.FC = () => {
+  const navigate = useNavigate();
   return (
     <div className="flex flex-col min-h-screen">
       <header className="sticky top-0 z-50 flex items-center justify-between bg-white/95 dark:bg-background-dark/95 backdrop-blur-md px-4 py-3 border-b border-slate-200/50 dark:border-slate-800/50">
         <button
-          onClick={() => onNavigate('profile')}
+          onClick={() => navigate('/profile')}
           className="flex items-center justify-center size-10 rounded-full hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors text-slate-900 dark:text-white group"
         >
           <span className="material-symbols-outlined text-[24px]">arrow_back</span>
         </button>
         <h1 className="text-lg font-bold leading-tight tracking-tight flex-1 text-center pr-2">Change Password</h1>
-        <button onClick={() => onNavigate('password-success')} className="flex items-center justify-end">
+        <button onClick={() => navigate('/password-success')} className="flex items-center justify-end">
           <p className="text-primary text-base font-bold leading-normal tracking-wide hover:opacity-80 transition-opacity">Save</p>
         </button>
       </header>
@@ -33,7 +32,7 @@ const ChangePassword: React.FC<ChangePasswordProps> = ({ onNavigate }) => {
             </div>
           </label>
           <div className="flex justify-end px-1">
-            <button onClick={() => onNavigate('forgot-password')} className="text-primary text-sm font-medium hover:underline decoration-primary/50 underline-offset-4">Forgot Password?</button>
+            <button onClick={() => navigate('/forgot-password')} className="text-primary text-sm font-medium hover:underline decoration-primary/50 underline-offset-4">Forgot Password?</button>
           </div>
         </div>
 
@@ -87,7 +86,7 @@ const ChangePassword: React.FC<ChangePasswordProps> = ({ onNavigate }) => {
 
         <div className="mt-auto pt-10 pb-6">
           <button
-            onClick={() => onNavigate('password-success')}
+            onClick={() => navigate('/password-success')}
             className="w-full bg-primary hover:bg-primary-hover active:scale-[0.98] transition-all h-14 rounded-full flex items-center justify-center shadow-lg shadow-primary/20"
           >
             <span className="text-white text-base font-bold tracking-wide">Update Password</span>

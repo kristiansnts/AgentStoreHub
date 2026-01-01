@@ -1,16 +1,15 @@
 
 import React from 'react';
 
-interface PasswordSuccessProps {
-  onNavigate: (view: any) => void;
-}
+import { useNavigate } from 'react-router-dom';
 
-const PasswordSuccess: React.FC<PasswordSuccessProps> = ({ onNavigate }) => {
+const PasswordSuccess: React.FC = () => {
+  const navigate = useNavigate();
   return (
     <div className="flex flex-col h-full min-h-screen">
       <div className="flex items-center p-4 pb-2 justify-between">
-        <button 
-          onClick={() => onNavigate('login')}
+        <button
+          onClick={() => navigate('/login')}
           className="text-slate-900 dark:text-white flex size-12 shrink-0 items-center justify-center rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
         >
           <span className="material-symbols-outlined" style={{ fontSize: '24px' }}>close</span>
@@ -36,8 +35,8 @@ const PasswordSuccess: React.FC<PasswordSuccessProps> = ({ onNavigate }) => {
       </div>
 
       <div className="p-6 pb-12 w-full animate-fade-in-up" style={{ animationDelay: '0.2s', animationFillMode: 'both' }}>
-        <button 
-          onClick={() => onNavigate('login')}
+        <button
+          onClick={() => navigate('/login')}
           className="flex w-full cursor-pointer items-center justify-center overflow-hidden rounded-full h-14 bg-primary hover:bg-primary-hover transition-colors text-white text-[17px] font-bold shadow-md shadow-primary/20"
         >
           <span className="truncate">Back to Login</span>

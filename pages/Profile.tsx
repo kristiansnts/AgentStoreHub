@@ -1,18 +1,15 @@
 
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import Icon from '../components/Icon';
 import Button from '../components/Button';
 
-interface ProfileProps {
-  onBack: () => void;
-  onNavigate: (view: any) => void;
-}
-
-const Profile: React.FC<ProfileProps> = ({ onBack, onNavigate }) => {
+const Profile: React.FC = () => {
+  const navigate = useNavigate();
   return (
     <div className="flex flex-col h-full bg-background-light dark:bg-background-dark animate-in slide-in-from-right duration-300">
       <header className="sticky top-0 z-50 flex items-center justify-between bg-white/80 dark:bg-gray-900/80 px-4 py-3 backdrop-blur-md">
-        <button onClick={onBack} className="size-10 flex items-center justify-center rounded-full hover:bg-black/5">
+        <button onClick={() => navigate('/home')} className="size-10 flex items-center justify-center rounded-full hover:bg-black/5">
           <Icon name="arrow_back" />
         </button>
         <h1 className="flex-1 text-center text-lg font-bold">Profile Settings</h1>
@@ -74,7 +71,7 @@ const Profile: React.FC<ProfileProps> = ({ onBack, onNavigate }) => {
         <div className="mt-6">
           <h3 className="mb-3 ml-2 text-sm font-bold uppercase tracking-wider text-text-sub">Subscriptions</h3>
           <div className="flex flex-col overflow-hidden rounded-2xl bg-white dark:bg-gray-900 shadow-sm border border-gray-100 dark:border-gray-800">
-            <button onClick={() => onNavigate('library')} className="flex w-full items-center justify-between p-4 hover:bg-gray-50 active:bg-gray-100 transition-colors text-left group">
+            <button onClick={() => navigate('/library')} className="flex w-full items-center justify-between p-4 hover:bg-gray-50 active:bg-gray-100 transition-colors text-left group">
               <div className="flex items-center gap-4">
                 <div className="size-12 flex items-center justify-center rounded-xl bg-pink-100 text-pink-600">
                   <Icon name="card_membership" className="text-[24px]" />
@@ -93,7 +90,7 @@ const Profile: React.FC<ProfileProps> = ({ onBack, onNavigate }) => {
         <div className="mt-6">
           <h3 className="mb-3 ml-2 text-sm font-bold uppercase tracking-wider text-text-sub">Security</h3>
           <div className="flex flex-col overflow-hidden rounded-2xl bg-white dark:bg-gray-900 shadow-sm border border-gray-100 dark:border-gray-800">
-            <button onClick={() => onNavigate('change-password')} className="flex w-full items-center justify-between p-4 hover:bg-gray-50 active:bg-gray-100 transition-colors text-left group">
+            <button onClick={() => navigate('/change-password')} className="flex w-full items-center justify-between p-4 hover:bg-gray-50 active:bg-gray-100 transition-colors text-left group">
               <div className="flex items-center gap-4">
                 <div className="size-12 flex items-center justify-center rounded-xl bg-orange-100 text-orange-600">
                   <Icon name="lock" className="text-[24px]" />
@@ -121,7 +118,7 @@ const Profile: React.FC<ProfileProps> = ({ onBack, onNavigate }) => {
                 <span className="text-xs text-indigo-600 dark:text-indigo-400">Apply to publish your own AI agents</span>
               </div>
             </div>
-            <Button onClick={() => onNavigate('dashboard')} variant="primary" className="w-full py-3 h-auto">
+            <Button onClick={() => navigate('/dashboard')} variant="primary" className="w-full py-3 h-auto">
               Open Creator Dashboard
             </Button>
           </div>

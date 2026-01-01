@@ -1,17 +1,14 @@
-
 import React from 'react';
 import Icon from '../components/Icon';
+import { useNavigate } from 'react-router-dom';
 import Button from '../components/Button';
 
-interface CreatorDashboardProps {
-  onBack: () => void;
-}
-
-const CreatorDashboard: React.FC<CreatorDashboardProps> = ({ onBack }) => {
+const CreatorDashboard: React.FC = () => {
+  const navigate = useNavigate();
   return (
     <div className="flex flex-col h-full bg-background-light dark:bg-background-dark animate-in slide-in-from-bottom-12 duration-500">
       <header className="sticky top-0 z-50 flex items-center justify-between bg-white/90 dark:bg-gray-900/90 px-4 py-3 backdrop-blur-md border-b border-gray-100 dark:border-gray-800">
-        <button onClick={onBack} className="size-10 flex items-center justify-center rounded-full hover:bg-black/5">
+        <button onClick={() => navigate(-1)} className="size-10 flex items-center justify-center rounded-full hover:bg-black/5">
           <Icon name="arrow_back" />
         </button>
         <h1 className="text-lg font-bold">Creator Dashboard</h1>
@@ -56,7 +53,7 @@ const CreatorDashboard: React.FC<CreatorDashboardProps> = ({ onBack }) => {
 
         {/* Alerts Horizontal Scroll */}
         <div>
-           <div className="flex items-center justify-between mb-3 px-1">
+          <div className="flex items-center justify-between mb-3 px-1">
             <h3 className="text-lg font-bold">Alerts</h3>
             <button className="text-primary text-sm font-bold">Clear All</button>
           </div>
@@ -83,7 +80,7 @@ const CreatorDashboard: React.FC<CreatorDashboardProps> = ({ onBack }) => {
           </div>
 
           <div className="flex flex-col gap-3">
-             <div className="bg-white dark:bg-gray-900 p-4 rounded-2xl shadow-sm border border-gray-50 dark:border-gray-800 flex items-center gap-4">
+            <div className="bg-white dark:bg-gray-900 p-4 rounded-2xl shadow-sm border border-gray-50 dark:border-gray-800 flex items-center gap-4">
               <div className="size-14 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white">
                 <Icon name="smart_toy" className="text-2xl" />
               </div>

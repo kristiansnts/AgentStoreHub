@@ -1,26 +1,28 @@
 
 import React, { useState } from 'react';
 
+import { useNavigate } from 'react-router-dom';
+
 interface ForgotPasswordProps {
-  onNavigate: (view: any) => void;
   onSetEmail: (email: string) => void;
 }
 
-const ForgotPassword: React.FC<ForgotPasswordProps> = ({ onNavigate, onSetEmail }) => {
+const ForgotPassword: React.FC<ForgotPasswordProps> = ({ onSetEmail }) => {
+  const navigate = useNavigate();
   const [inputValue, setInputValue] = useState('');
 
   const handleSubmit = () => {
     if (inputValue) {
       onSetEmail(inputValue);
-      onNavigate('check-email');
+      navigate('/check-email');
     }
   };
 
   return (
     <div className="flex flex-col min-h-screen">
       <div className="flex items-center px-4 py-2 pt-8 justify-between sticky top-0 bg-white/90 dark:bg-background-dark/90 backdrop-blur-md z-10">
-        <button 
-          onClick={() => onNavigate('login')}
+        <button
+          onClick={() => navigate('/login')}
           className="text-slate-900 dark:text-white flex size-10 shrink-0 items-center justify-center rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
         >
           <span className="material-symbols-outlined" style={{ fontSize: '24px' }}>arrow_back</span>
@@ -47,7 +49,7 @@ const ForgotPassword: React.FC<ForgotPasswordProps> = ({ onNavigate, onSetEmail 
               <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                 <span className="material-symbols-outlined text-slate-400" style={{ fontSize: '20px' }}>mail</span>
               </div>
-              <input 
+              <input
                 id="email"
                 type="email"
                 value={inputValue}
@@ -70,7 +72,7 @@ const ForgotPassword: React.FC<ForgotPasswordProps> = ({ onNavigate, onSetEmail 
       </div>
 
       <div className="p-6 w-full pb-10">
-        <button 
+        <button
           onClick={handleSubmit}
           className="flex w-full cursor-pointer items-center justify-center overflow-hidden rounded-[24px] h-14 bg-primary hover:bg-primary-hover transition-colors text-white text-[17px] font-bold tracking-wide shadow-lg shadow-primary/25 active:scale-[0.98] transition-transform"
         >

@@ -2,18 +2,17 @@
 import React, { useState } from 'react';
 import Modal from '../components/Modal';
 
-interface SubscriptionDetailsProps {
-    onBack: () => void;
-}
+import { useNavigate } from 'react-router-dom';
 
-const SubscriptionDetails: React.FC<SubscriptionDetailsProps> = ({ onBack }) => {
+const SubscriptionDetails: React.FC = () => {
+    const navigate = useNavigate();
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     return (
         <div className="animate-in fade-in slide-in-from-right-4 duration-300 bg-gray-50 dark:bg-black min-h-screen">
             <header className="flex items-center bg-white dark:bg-[#0f1623] p-4 pb-2 justify-between sticky top-0 z-10">
                 <button
-                    onClick={onBack}
+                    onClick={() => navigate(-1)}
                     className="text-gray-900 dark:text-white flex size-12 shrink-0 items-center justify-center rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-all"
                 >
                     <span className="material-symbols-outlined">arrow_back</span>
@@ -74,7 +73,7 @@ const SubscriptionDetails: React.FC<SubscriptionDetailsProps> = ({ onBack }) => 
                 onClose={() => setIsModalOpen(false)}
                 onConfirm={() => {
                     setIsModalOpen(false);
-                    onBack();
+                    navigate('/library');
                 }}
                 title="Confirm Unsubscription"
                 description="Are you sure you want to unsubscribe from Code Reviewer? You will lose access to all saved history and configurations immediately."

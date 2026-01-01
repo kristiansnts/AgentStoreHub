@@ -1,22 +1,21 @@
 
 import React from 'react';
 
-interface LoginProps {
-  onNavigate: (view: any) => void;
-}
+import { useNavigate } from 'react-router-dom';
 
-const Login: React.FC<LoginProps> = ({ onNavigate }) => {
+const Login: React.FC = () => {
+  const navigate = useNavigate();
   return (
     <div className="flex flex-col min-h-screen px-6 py-4">
       <header className="flex items-center justify-between h-12 w-full mb-4">
         <button
-          onClick={() => onNavigate('welcome')}
+          onClick={() => navigate('/welcome')}
           className="flex items-center justify-center -ml-2 p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
         >
           <span className="material-symbols-outlined" style={{ fontSize: '24px' }}>arrow_back_ios_new</span>
         </button>
         <button
-          onClick={() => onNavigate('signup')}
+          onClick={() => navigate('/signup')}
           className="text-primary font-bold text-base hover:opacity-80 transition-opacity"
         >
           Sign Up
@@ -55,7 +54,7 @@ const Login: React.FC<LoginProps> = ({ onNavigate }) => {
           </div>
           <div className="flex justify-end pt-1">
             <button
-              onClick={() => onNavigate('forgot-password')}
+              onClick={() => navigate('/forgot-password')}
               className="text-primary font-bold text-sm hover:opacity-80 transition-opacity"
             >
               Forgot Password?
@@ -66,7 +65,7 @@ const Login: React.FC<LoginProps> = ({ onNavigate }) => {
 
       <div className="mt-auto pb-10 flex flex-col gap-6 animate-fade-in-up" style={{ animationDelay: '0.2s', animationFillMode: 'both' }}>
         <button
-          onClick={() => onNavigate('home')}
+          onClick={() => navigate('/home')}
           className="w-full h-14 rounded-2xl bg-primary hover:bg-primary-hover active:scale-[0.98] transition-all text-white text-lg font-bold shadow-lg shadow-primary/25 flex items-center justify-center"
         >
           Log In

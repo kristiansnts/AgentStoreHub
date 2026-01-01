@@ -1,20 +1,23 @@
 
-import React, { useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import Icon from '../components/Icon';
 import Button from '../components/Button';
-import { Agent } from '../types';
+import { MOCK_AGENTS } from '../constants';
 
 interface AgentDetailProps {
-  agent: Agent;
-  onBack: () => void;
-  onSubscribe: () => void;
+  onSubscribe: (agent: any) => void;
 }
 
-const AgentDetail: React.FC<AgentDetailProps> = ({ agent, onBack, onSubscribe }) => {
+const AgentDetail: React.FC<AgentDetailProps> = ({ onSubscribe }) => {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const agent = MOCK_AGENTS.find(a => a.id === id);
+
+  if (!agent) return <div>Agent not found</div>;
   return (
     <div className="flex flex-col h-full bg-white dark:bg-[#0f1623] animate-in slide-in-from-bottom-12 duration-500 overflow-y-auto no-scrollbar">
       <header className="sticky top-0 z-50 flex items-center justify-between bg-white/90 dark:bg-gray-900/90 px-4 py-3 backdrop-blur-md">
-        <button onClick={onBack} className="size-10 flex items-center justify-center rounded-full hover:bg-black/5">
+        <button onClick={() => navigate(-1)} className="size-10 flex items-center justify-center rounded-full hover:bg-black/5">
           <Icon name="arrow_back" />
         </button>
         <button className="size-10 flex items-center justify-center rounded-full hover:bg-black/5">
@@ -24,10 +27,10 @@ const AgentDetail: React.FC<AgentDetailProps> = ({ agent, onBack, onSubscribe })
 
       <main className="px-5 pb-40">
         <div className="flex flex-row gap-5 items-start mt-4">
-          <img 
-            src={agent.image} 
-            className="size-24 rounded-[24px] object-cover shadow-lg border border-gray-100" 
-            alt={agent.name} 
+          <img
+            src={agent.image}
+            className="size-24 rounded-[24px] object-cover shadow-lg border border-gray-100"
+            alt={agent.name}
           />
           <div className="flex-1 flex flex-col pt-1">
             <div className="flex items-center gap-1.5 mb-1">
@@ -38,7 +41,7 @@ const AgentDetail: React.FC<AgentDetailProps> = ({ agent, onBack, onSubscribe })
               Your {agent.category} Assistant
             </p>
             <div className="flex items-center gap-2">
-              <Button variant="primary" onClick={onSubscribe} className="px-6 py-2 h-auto text-sm">
+              <Button variant="primary" onClick={() => onSubscribe(agent)} className="px-6 py-2 h-auto text-sm">
                 Subscribe
               </Button>
               <Button variant="secondary" className="px-4 py-2 h-auto text-sm">
@@ -83,7 +86,7 @@ const AgentDetail: React.FC<AgentDetailProps> = ({ agent, onBack, onSubscribe })
           <div className="flex gap-4 overflow-x-auto no-scrollbar pb-2 snap-x">
             {[1, 2].map(i => (
               <div key={i} className="snap-center shrink-0 w-[240px] h-[480px] rounded-[32px] bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 overflow-hidden shadow-sm flex items-center justify-center">
-                 <Icon name="image" className="text-gray-300 text-4xl" />
+                <Icon name="image" className="text-gray-300 text-4xl" />
               </div>
             ))}
           </div>
@@ -100,7 +103,7 @@ const AgentDetail: React.FC<AgentDetailProps> = ({ agent, onBack, onSubscribe })
               <div className="flex flex-col">
                 <span className="text-xs font-bold">Sarah Jenkins</span>
                 <div className="flex text-amber-400 gap-0.5 mt-0.5">
-                  {[1,2,3,4,5].map(i => <Icon key={i} name="star" className="text-[14px]" filled />)}
+                  {[1, 2, 3, 4, 5].map(i => <Icon key={i} name="star" className="text-[14px]" filled />)}
                 </div>
               </div>
               <span className="text-[10px] text-gray-400 font-bold">2d ago</span>
@@ -132,7 +135,7 @@ const AgentDetail: React.FC<AgentDetailProps> = ({ agent, onBack, onSubscribe })
 
       {/* Full-width Sticky Footer */}
       <div className="fixed bottom-0 left-0 right-0 p-5 bg-white/95 dark:bg-gray-900/95 backdrop-blur-2xl border-t border-gray-200/50 dark:border-gray-700/50 z-50 shadow-[0_-4px_30px_rgb(0,0,0,0.05)] flex flex-col items-center max-w-md mx-auto">
-        <Button onClick={onSubscribe} className="w-full py-4 h-auto text-lg flex items-center justify-center gap-2 shadow-lg shadow-primary/20">
+        <Button onClick={() => onSubscribe(agent)} className="w-full py-4 h-auto text-lg flex items-center justify-center gap-2 shadow-lg shadow-primary/20">
           Subscribe <span className="opacity-70 font-normal">- {agent.price || '$9.99/mo'}</span>
         </Button>
         <div className="flex items-center gap-1.5 mt-3">

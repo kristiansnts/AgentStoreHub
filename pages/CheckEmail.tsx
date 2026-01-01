@@ -1,12 +1,14 @@
 
 import React from 'react';
 
+import { useNavigate } from 'react-router-dom';
+
 interface CheckEmailProps {
-  onNavigate: (view: any) => void;
   email: string;
 }
 
-const CheckEmail: React.FC<CheckEmailProps> = ({ onNavigate, email }) => {
+const CheckEmail: React.FC<CheckEmailProps> = ({ email }) => {
+  const navigate = useNavigate();
   return (
     <div className="flex flex-col items-center justify-center min-h-screen p-4 sm:p-6 text-center">
       <main className="relative w-full max-w-[480px] flex flex-col items-center">
@@ -32,14 +34,14 @@ const CheckEmail: React.FC<CheckEmailProps> = ({ onNavigate, email }) => {
         </div>
 
         <div className="w-full flex flex-col gap-3 mt-8 px-2 animate-fade-in-up" style={{ animationDelay: '0.2s', animationFillMode: 'both' }}>
-          <button 
-            onClick={() => onNavigate('login')}
+          <button
+            onClick={() => navigate('/login')}
             className="flex w-full cursor-pointer items-center justify-center rounded-full h-14 bg-primary hover:bg-primary-hover active:bg-blue-700 transition-all text-white text-[17px] font-bold shadow-lg shadow-primary/25 active:scale-[0.98]"
           >
             Return to Login
           </button>
-          <button 
-            onClick={() => onNavigate('set-new-password')}
+          <button
+            onClick={() => navigate('/set-new-password')}
             className="flex w-full cursor-pointer items-center justify-center rounded-full h-12 text-primary text-[17px] font-semibold hover:bg-primary/5"
           >
             Open Email App
@@ -48,8 +50,8 @@ const CheckEmail: React.FC<CheckEmailProps> = ({ onNavigate, email }) => {
 
         <div className="mt-8 px-6 text-center animate-fade-in-up" style={{ animationDelay: '0.3s', animationFillMode: 'both' }}>
           <p className="text-slate-400 dark:text-slate-500 text-sm font-medium leading-relaxed">
-            Did not receive the email? <br/>
-            Check your spam filter, or <button onClick={() => onNavigate('forgot-password')} className="text-primary hover:underline font-bold">try another email address</button>.
+            Did not receive the email? <br />
+            Check your spam filter, or <button onClick={() => navigate('/forgot-password')} className="text-primary hover:underline font-bold">try another email address</button>.
           </p>
         </div>
 

@@ -26,7 +26,7 @@ export interface AIAgent {
   renewalDate?: string;
 }
 
-export type ViewState = 'onboarding' | 'welcome' | 'login' | 'signup' | 'forgot-password' | 'check-email' | 'set-new-password' | 'password-success' | 'change-password' | 'home' | 'detail' | 'profile' | 'dashboard' | 'create-agent' | 'auth' | 'library' | 'subscription-details';
+
 
 export type FlowStep = 'free-confirm' | 'activate-agent' | 'payment-confirm' | 'success';
 

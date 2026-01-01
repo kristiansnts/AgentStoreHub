@@ -1,14 +1,11 @@
 
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Icon from '../components/Icon';
 import { MOCK_AGENTS, CATEGORIES } from '../constants';
-import { Agent } from '../types';
 
-interface HomeProps {
-  onSelectAgent: (agent: Agent) => void;
-}
-
-const Home: React.FC<HomeProps> = ({ onSelectAgent }) => {
+const Home: React.FC = () => {
+  const navigate = useNavigate();
   const [activeCategory, setActiveCategory] = useState('All');
 
   const featuredAgents = MOCK_AGENTS.filter(a => a.isFeatured);
@@ -23,9 +20,9 @@ const Home: React.FC<HomeProps> = ({ onSelectAgent }) => {
         </div>
         <div className="flex-1 relative">
           <Icon name="search" className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-[20px]" />
-          <input 
-            type="text" 
-            placeholder="Search Agents..." 
+          <input
+            type="text"
+            placeholder="Search Agents..."
             className="w-full bg-gray-100 dark:bg-gray-800 border-none rounded-full pl-10 pr-4 py-2.5 text-sm focus:ring-2 focus:ring-primary/20 transition-all"
           />
         </div>
@@ -41,11 +38,10 @@ const Home: React.FC<HomeProps> = ({ onSelectAgent }) => {
           <button
             key={cat}
             onClick={() => setActiveCategory(cat)}
-            className={`snap-start flex-shrink-0 px-5 py-2 rounded-full text-sm font-medium transition-all ${
-              activeCategory === cat 
-                ? 'bg-primary text-white shadow-lg shadow-primary/25' 
+            className={`snap-start flex-shrink-0 px-5 py-2 rounded-full text-sm font-medium transition-all ${activeCategory === cat
+                ? 'bg-primary text-white shadow-lg shadow-primary/25'
                 : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-50'
-            }`}
+              }`}
           >
             {cat}
           </button>
@@ -60,9 +56,9 @@ const Home: React.FC<HomeProps> = ({ onSelectAgent }) => {
         </div>
         <div className="flex overflow-x-auto gap-4 px-4 pb-4 snap-x snap-mandatory no-scrollbar">
           {featuredAgents.map(agent => (
-            <div 
+            <div
               key={agent.id}
-              onClick={() => onSelectAgent(agent)}
+              onClick={() => navigate(`/agent/${agent.id}`)}
               className="snap-center relative flex-shrink-0 w-[85%] aspect-[16/9] rounded-[24px] overflow-hidden shadow-lg group cursor-pointer"
             >
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent z-10" />
@@ -87,14 +83,14 @@ const Home: React.FC<HomeProps> = ({ onSelectAgent }) => {
         </div>
         <div className="flex flex-col gap-6">
           {topAgents.map(agent => (
-            <div 
-              key={agent.id} 
-              onClick={() => onSelectAgent(agent)}
+            <div
+              key={agent.id}
+              onClick={() => navigate(`/agent/${agent.id}`)}
               className="flex items-center gap-4 group cursor-pointer"
             >
-              <img 
-                src={agent.image} 
-                className="size-[72px] rounded-2xl object-cover shadow-sm bg-gray-50 border border-gray-100 dark:border-gray-800" 
+              <img
+                src={agent.image}
+                className="size-[72px] rounded-2xl object-cover shadow-sm bg-gray-50 border border-gray-100 dark:border-gray-800"
                 alt={agent.name}
               />
               <div className="flex-1 min-w-0">
@@ -106,11 +102,10 @@ const Home: React.FC<HomeProps> = ({ onSelectAgent }) => {
                 </div>
               </div>
               <div className="flex-shrink-0">
-                <button className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all ${
-                  agent.isFree 
-                    ? 'bg-primary/10 text-primary hover:bg-primary hover:text-white' 
+                <button className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all ${agent.isFree
+                    ? 'bg-primary/10 text-primary hover:bg-primary hover:text-white'
                     : 'bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white hover:bg-gray-200'
-                }`}>
+                  }`}>
                   {agent.isFree ? 'GET' : agent.price}
                 </button>
               </div>

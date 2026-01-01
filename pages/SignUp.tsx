@@ -1,25 +1,24 @@
 
 import React, { useState } from 'react';
 
-interface SignUpProps {
-  onNavigate: (view: any) => void;
-}
+import { useNavigate } from 'react-router-dom';
 
-const SignUp: React.FC<SignUpProps> = ({ onNavigate }) => {
+const SignUp: React.FC = () => {
+  const navigate = useNavigate();
   const [agreed, setAgreed] = useState(false);
 
   return (
     <div className="flex flex-col min-h-screen">
       <header className="sticky top-0 z-10 flex items-center p-4 bg-white/80 dark:bg-background-dark/80 backdrop-blur-md">
         <button
-          onClick={() => onNavigate('welcome')}
+          onClick={() => navigate('/welcome')}
           className="flex size-10 shrink-0 items-center justify-center rounded-full text-slate-900 dark:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
         >
           <span className="material-symbols-outlined" style={{ fontSize: '24px' }}>arrow_back</span>
         </button>
         <div className="flex-1"></div>
         <button
-          onClick={() => onNavigate('login')}
+          onClick={() => navigate('/login')}
           className="text-sm font-semibold text-primary dark:text-indigo-400 hover:text-primary-hover transition-colors px-2"
         >
           Log In
@@ -117,7 +116,7 @@ const SignUp: React.FC<SignUpProps> = ({ onNavigate }) => {
 
         <div className="pt-8 pb-6">
           <button
-            onClick={() => onNavigate('home')}
+            onClick={() => navigate('/home')}
             className="flex w-full cursor-pointer items-center justify-center overflow-hidden rounded-[24px] h-14 bg-primary hover:bg-primary-hover transition-all duration-200 text-white text-[17px] font-bold shadow-lg shadow-primary/30 active:scale-[0.98]"
           >
             Sign Up

@@ -1,6 +1,7 @@
 
 import React, { useState, useCallback } from 'react';
-import { ViewState, Agent, FlowStep, SubscriptionData } from './types';
+import { Routes, Route, useNavigate, useLocation, Navigate } from 'react-router-dom';
+import { Agent, FlowStep, SubscriptionData } from './types';
 import BottomNav from './components/BottomNav';
 import Home from './pages/Home';
 import Profile from './pages/Profile';
@@ -24,8 +25,8 @@ import PasswordSuccess from './pages/PasswordSuccess';
 import ChangePassword from './pages/ChangePassword';
 
 const App: React.FC = () => {
-  const [view, setView] = useState<ViewState>('welcome');
-  const [selectedAgent, setSelectedAgent] = useState<Agent | null>(null);
+  const location = useLocation();
+  const navigate = useNavigate();
   const [authEmail, setAuthEmail] = useState('user@example.com');
   const [showSubscriptionModal, setShowSubscriptionModal] = useState(false);
   const [subscriptionStep, setSubscriptionStep] = useState<FlowStep>('free-confirm');
@@ -50,82 +51,50 @@ const App: React.FC = () => {
     }, 500);
   };
 
-  const renderView = () => {
-    switch (view) {
-      case 'onboarding':
-      case 'welcome':
-        return <Welcome onNavigate={setView} />;
-
-      case 'login':
-        return <Login onNavigate={setView} />;
-
-      case 'signup':
-        return <SignUp onNavigate={setView} />;
-
-      case 'forgot-password':
-        return <ForgotPassword onNavigate={setView} onSetEmail={setAuthEmail} />;
-
-      case 'check-email':
-        return <CheckEmail onNavigate={setView} email={authEmail} />;
-
-      case 'set-new-password':
-        return <SetNewPassword onNavigate={setView} />;
-
-      case 'password-success':
-        return <PasswordSuccess onNavigate={setView} />;
-
-      case 'change-password':
-        return <ChangePassword onNavigate={setView} />;
-
-      case 'home':
-        return <Home onSelectAgent={(agent) => { setSelectedAgent(agent); setView('detail'); }} />;
-
-      case 'detail':
-        return selectedAgent ? (
-          <AgentDetail
-            agent={selectedAgent}
-            onBack={() => setView('home')}
-            onSubscribe={() => {
-              setSubscriptionData({
-                planName: selectedAgent.isFree ? 'Free Forever' : 'Pro Agent Plan',
-                price: selectedAgent.price ? parseFloat(selectedAgent.price.replace(/[^0-9.]/g, '')) : 9.99,
-                isFree: selectedAgent.isFree || false,
-                agentName: selectedAgent.name,
-              });
-              setSubscriptionStep('free-confirm');
-              setShowSubscriptionModal(true);
-            }}
-          />
-        ) : null;
-
-      case 'profile':
-        return <Profile onBack={() => setView('home')} onNavigate={setView} />;
-
-
-      case 'dashboard':
-        return <CreatorDashboard onBack={() => setView('profile')} />;
-
-      case 'library':
-        return <Library onBack={() => setView('profile')} onNavigate={setView} />;
-
-      case 'subscription-details':
-        return <SubscriptionDetails onBack={() => setView('library')} />;
-
-
-      default:
-        return <Home onSelectAgent={(agent) => { setSelectedAgent(agent); setView('detail'); }} />;
-    }
+  const handleSubscribe = (agent: any) => {
+    setSubscriptionData({
+      planName: agent.isFree ? 'Free Forever' : 'Pro Agent Plan',
+      price: agent.price ? parseFloat(agent.price.replace(/[^0-9.]/g, '')) : 9.99,
+      isFree: agent.isFree || false,
+      agentName: agent.name,
+    });
+    setSubscriptionStep('free-confirm');
+    setShowSubscriptionModal(true);
   };
+
+  // Determine if we should show bottom nav
+  const showBottomNav = ['/home', '/profile', '/library'].includes(location.pathname);
 
   return (
     <div className="flex justify-center bg-gray-50 dark:bg-black min-h-screen font-sans selection:bg-primary/20 selection:text-primary">
       <div className="w-full max-w-md h-full min-h-screen bg-white dark:bg-[#0f1623] relative flex flex-col shadow-2xl overflow-hidden">
 
-        {renderView()}
+        <Routes>
+          <Route path="/" element={<Navigate to="/welcome" replace />} />
+          <Route path="/onboarding" element={<Navigate to="/welcome" replace />} />
 
-        {/* Global Bottom Nav (Show on home/profile only) */}
-        {(view === 'home' || view === 'profile') && (
-          <BottomNav activeTab={view === 'home' ? 'home' : 'profile'} onTabChange={setView} />
+          {/* Auth Routes */}
+          <Route path="/welcome" element={<Welcome />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/forgot-password" element={<ForgotPassword onSetEmail={setAuthEmail} />} />
+          <Route path="/check-email" element={<CheckEmail email={authEmail} />} />
+          <Route path="/set-new-password" element={<SetNewPassword />} />
+          <Route path="/password-success" element={<PasswordSuccess />} />
+          <Route path="/change-password" element={<ChangePassword />} />
+
+          {/* App Routes */}
+          <Route path="/home" element={<Home />} />
+          <Route path="/agent/:id" element={<AgentDetail onSubscribe={handleSubscribe} />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/dashboard" element={<CreatorDashboard />} />
+          <Route path="/library" element={<Library />} />
+          <Route path="/subscription-details" element={<SubscriptionDetails />} />
+        </Routes>
+
+        {/* Global Bottom Nav */}
+        {showBottomNav && (
+          <BottomNav activeTab={location.pathname.substring(1)} />
         )}
 
         {/* Subscription Confirmation Modal */}
