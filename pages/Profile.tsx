@@ -1,11 +1,24 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Icon from '../components/Icon';
 import Button from '../components/Button';
+import EditProfile from '../components/EditProfile';
+import { UserProfile } from '../components/EditProfile/types';
+import WhatsAppConnect from '../components/WhatsAppConnect';
 
 const Profile: React.FC = () => {
   const navigate = useNavigate();
+  const [showEditProfile, setShowEditProfile] = useState(false);
+  const [showWhatsAppConnect, setShowWhatsAppConnect] = useState(false);
+  const [whatsappNumber, setWhatsappNumber] = useState<string | undefined>(undefined);
+  const [showSuccessToast, setShowSuccessToast] = useState(false);
+  const [userProfile, setUserProfile] = useState<UserProfile>({
+    displayName: 'Alex Morgan',
+    bio: 'AI enthusiast and prompt engineer building the future of autonomous agents.',
+    email: 'alex.morgan@example.com',
+    avatarUrl: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDHIlKOuF-iVIAfPBmrxQYbHWFw2uUp0JqYUqDcaSwT3CcrM4QAOaFbnSCxkwzeWegvarjS7UQUL6_AUJMAeayxaBkMlJfkZZ-eDX2Une13AOvQq-ZkvsLnq_VMqsOc6YedQuDGKhAwYblJQO_aATkUNAPiDOTtopBCgkbw6s3Dp2KOcqKEAUIySvRzlHjzZxpTgaivQnU8KNXSnp1kn2JdusJrPC5JxS9AJZaKngxl1F0J_uDmPQt_d48mIUQwArKvqMwq6rEtM4M'
+  });
   return (
     <div className="flex flex-col h-full bg-background-light dark:bg-background-dark animate-in slide-in-from-right duration-300">
       <header className="sticky top-0 z-50 flex items-center justify-between bg-white/80 dark:bg-gray-900/80 px-4 py-3 backdrop-blur-md">
@@ -29,13 +42,16 @@ const Profile: React.FC = () => {
                 alt="Avatar"
               />
             </div>
-            <button className="absolute bottom-0 right-0 size-8 flex items-center justify-center rounded-full bg-white dark:bg-gray-800 text-text-main shadow-md ring-2 ring-white hover:bg-gray-50 transition-colors">
+            <button
+              onClick={() => setShowEditProfile(true)}
+              className="absolute bottom-0 right-0 size-8 flex items-center justify-center rounded-full bg-white dark:bg-gray-800 text-text-main shadow-md ring-2 ring-white hover:bg-gray-50 transition-colors"
+            >
               <Icon name="edit" className="text-[16px]" />
             </button>
           </div>
           <div className="text-center">
-            <h2 className="text-2xl font-bold">Alex Morgan</h2>
-            <p className="text-sm font-medium text-text-sub">alex.morgan@example.com</p>
+            <h2 className="text-2xl font-bold">{userProfile.displayName}</h2>
+            <p className="text-sm font-medium text-text-sub">{userProfile.email}</p>
           </div>
         </section>
 
@@ -43,27 +59,54 @@ const Profile: React.FC = () => {
         <div className="mt-4">
           <h3 className="mb-3 ml-2 text-sm font-bold uppercase tracking-wider text-text-sub">Linked Accounts</h3>
           <div className="flex flex-col overflow-hidden rounded-2xl bg-white dark:bg-gray-900 shadow-sm border border-gray-100 dark:border-gray-800">
-            {[
-              { icon: 'chat', label: 'WhatsApp', sub: 'Connected as +1 555-0123', color: 'bg-green-100 text-green-600' },
-              { icon: 'send', label: 'Telegram', sub: 'Connected as @alex_morgan', color: 'bg-blue-100 text-blue-500' },
-              { icon: 'account_circle', label: 'Google', sub: 'Connected as alex.morgan@gmail.com', color: 'bg-red-100 text-red-500' },
-            ].map((item, idx) => (
-              <React.Fragment key={item.label}>
-                <button className="flex w-full items-center justify-between p-4 hover:bg-gray-50 active:bg-gray-100 transition-colors text-left group">
-                  <div className="flex items-center gap-4">
-                    <div className={`size-12 flex items-center justify-center rounded-xl ${item.color}`}>
-                      <Icon name={item.icon} className="text-[24px]" />
-                    </div>
-                    <div className="flex flex-col">
-                      <span className="text-base font-bold text-text-main dark:text-white group-hover:text-primary transition-colors">{item.label}</span>
-                      <span className="text-xs text-text-sub">{item.sub}</span>
-                    </div>
-                  </div>
-                  <Icon name="chevron_right" className="text-gray-400" />
-                </button>
-                {idx < 2 && <div className="ml-20 h-px bg-gray-50 dark:bg-gray-800" />}
-              </React.Fragment>
-            ))}
+            {/* WhatsApp */}
+            <button
+              onClick={() => setShowWhatsAppConnect(true)}
+              className="flex w-full items-center justify-between p-4 hover:bg-gray-50 dark:hover:bg-gray-800 active:bg-gray-100 dark:active:bg-gray-700 transition-colors text-left group"
+            >
+              <div className="flex items-center gap-4">
+                <div className="size-12 flex items-center justify-center rounded-xl bg-green-100 dark:bg-green-900/20 text-green-600 dark:text-green-400">
+                  <Icon name="chat" className="text-[24px]" />
+                </div>
+                <div className="flex flex-col">
+                  <span className="text-base font-bold text-text-main dark:text-white group-hover:text-primary transition-colors">WhatsApp</span>
+                  <span className="text-xs text-text-sub">
+                    {whatsappNumber ? `Connected as ${whatsappNumber}` : 'Not connected'}
+                  </span>
+                </div>
+              </div>
+              <Icon name="chevron_right" className="text-gray-400" />
+            </button>
+            <div className="ml-20 h-px bg-gray-50 dark:bg-gray-800" />
+
+            {/* Telegram */}
+            <button className="flex w-full items-center justify-between p-4 hover:bg-gray-50 dark:hover:bg-gray-800 active:bg-gray-100 dark:active:bg-gray-700 transition-colors text-left group">
+              <div className="flex items-center gap-4">
+                <div className="size-12 flex items-center justify-center rounded-xl bg-blue-100 dark:bg-blue-900/20 text-blue-500 dark:text-blue-400">
+                  <Icon name="send" className="text-[24px]" />
+                </div>
+                <div className="flex flex-col">
+                  <span className="text-base font-bold text-text-main dark:text-white group-hover:text-primary transition-colors">Telegram</span>
+                  <span className="text-xs text-text-sub">Connected as @alex_morgan</span>
+                </div>
+              </div>
+              <Icon name="chevron_right" className="text-gray-400" />
+            </button>
+            <div className="ml-20 h-px bg-gray-50 dark:bg-gray-800" />
+
+            {/* Google */}
+            <button className="flex w-full items-center justify-between p-4 hover:bg-gray-50 dark:hover:bg-gray-800 active:bg-gray-100 dark:active:bg-gray-700 transition-colors text-left group">
+              <div className="flex items-center gap-4">
+                <div className="size-12 flex items-center justify-center rounded-xl bg-red-100 dark:bg-red-900/20 text-red-500 dark:text-red-400">
+                  <Icon name="account_circle" className="text-[24px]" />
+                </div>
+                <div className="flex flex-col">
+                  <span className="text-base font-bold text-text-main dark:text-white group-hover:text-primary transition-colors">Google</span>
+                  <span className="text-xs text-text-sub">Connected as alex.morgan@gmail.com</span>
+                </div>
+              </div>
+              <Icon name="chevron_right" className="text-gray-400" />
+            </button>
           </div>
         </div>
 
@@ -124,6 +167,75 @@ const Profile: React.FC = () => {
           </div>
         </div>
       </main>
+
+      {/* Edit Profile Modal */}
+      {showEditProfile && (
+        <div className="fixed inset-0 z-[100] bg-white dark:bg-background-dark">
+          <EditProfile
+            initialProfile={userProfile}
+            onSave={(updatedProfile) => {
+              setUserProfile(updatedProfile);
+              setShowEditProfile(false);
+              alert('Profile updated successfully!');
+            }}
+            onCancel={() => setShowEditProfile(false)}
+            onChangePassword={() => {
+              setShowEditProfile(false);
+              navigate('/change-password');
+            }}
+            onDeleteAccount={() => {
+              if (confirm('Are you sure? This will permanently delete your account.')) {
+                alert('Account deleted');
+                navigate('/home');
+              }
+            }}
+          />
+        </div>
+      )}
+
+      {/* WhatsApp Connect Modal */}
+      {showWhatsAppConnect && (
+        <div className="fixed inset-0 z-[100] bg-white dark:bg-background-dark">
+          <WhatsAppConnect
+            initialScreen='connect'
+            initialProfile={{
+              name: userProfile.displayName,
+              email: userProfile.email,
+              avatar: userProfile.avatarUrl,
+              whatsapp: whatsappNumber,
+              telegram: undefined,
+              google: undefined
+            }}
+            onConnected={(phone) => {
+              setWhatsappNumber(phone);
+              setShowWhatsAppConnect(false);
+              setShowSuccessToast(true);
+
+              // Auto hide toast after 5 seconds
+              setTimeout(() => {
+                setShowSuccessToast(false);
+              }, 5000);
+            }}
+            onClose={() => setShowWhatsAppConnect(false)}
+          />
+        </div>
+      )}
+
+      {/* Success Toast */}
+      {showSuccessToast && (
+        <div className="fixed bottom-24 left-4 right-4 z-[110] flex items-center justify-between gap-3 rounded-xl bg-text-main p-4 shadow-2xl shadow-black/30 dark:bg-gray-100 transition-all animate-in slide-in-from-bottom-5 duration-300">
+          <div className="flex items-center gap-3">
+            <Icon name="check_circle" className="text-[22px] text-green-400 dark:text-green-600" />
+            <span className="text-sm font-semibold text-white dark:text-text-main">WhatsApp connected successfully!</span>
+          </div>
+          <button
+            onClick={() => setShowSuccessToast(false)}
+            className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-gray-400 hover:bg-white/10 hover:text-white dark:text-gray-500 dark:hover:bg-black/10 dark:hover:text-black transition-colors"
+          >
+            <Icon name="close" className="text-[18px]" />
+          </button>
+        </div>
+      )}
     </div>
   );
 };
