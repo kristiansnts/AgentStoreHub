@@ -6,6 +6,7 @@ import BottomNav from './components/BottomNav';
 import Home from './pages/Home';
 import Profile from './pages/Profile';
 import AgentDetail from './pages/AgentDetail';
+import Chat from './pages/Chat';
 import CreatorDashboard from './pages/CreatorDashboard';
 import Library from './pages/Library';
 import SubscriptionDetails from './pages/SubscriptionDetails';
@@ -24,12 +25,15 @@ import SetNewPassword from './pages/SetNewPassword';
 import PasswordSuccess from './pages/PasswordSuccess';
 import ChangePassword from './pages/ChangePassword';
 
+import { MOCK_AGENTS } from './constants';
+
 const App: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const [authEmail, setAuthEmail] = useState('user@example.com');
   const [showSubscriptionModal, setShowSubscriptionModal] = useState(false);
   const [subscriptionStep, setSubscriptionStep] = useState<FlowStep>('free-confirm');
+  const [subscribedAgents, setSubscribedAgents] = useState<string[]>(MOCK_AGENTS.map(agent => agent.id));
   const [subscriptionData, setSubscriptionData] = useState<SubscriptionData>({
     planName: 'Free Forever',
     price: 0,
@@ -37,12 +41,15 @@ const App: React.FC = () => {
     agentName: '',
   });
 
-  const handleSubscriptionNext = useCallback((nextStep: FlowStep, newData?: Partial<SubscriptionData>) => {
+  const handleSubscriptionNext = (nextStep: FlowStep, newData?: Partial<SubscriptionData>) => {
     if (newData) {
       setSubscriptionData(prev => ({ ...prev, ...newData }));
     }
+    if (nextStep === 'success' && subscriptionData.agentId) {
+      setSubscribedAgents(prev => [...prev, subscriptionData.agentId!]);
+    }
     setSubscriptionStep(nextStep);
-  }, []);
+  };
 
   const handleSubscriptionClose = () => {
     setShowSubscriptionModal(false);
@@ -57,6 +64,7 @@ const App: React.FC = () => {
       price: agent.price ? parseFloat(agent.price.replace(/[^0-9.]/g, '')) : 9.99,
       isFree: agent.isFree || false,
       agentName: agent.name,
+      agentId: agent.id,
     });
     setSubscriptionStep('free-confirm');
     setShowSubscriptionModal(true);
@@ -85,7 +93,8 @@ const App: React.FC = () => {
 
           {/* App Routes */}
           <Route path="/home" element={<Home />} />
-          <Route path="/agent/:id" element={<AgentDetail onSubscribe={handleSubscribe} />} />
+          <Route path="/agent/:id" element={<AgentDetail onSubscribe={handleSubscribe} subscribedAgents={subscribedAgents} />} />
+          <Route path="/chat/:id" element={<Chat />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/dashboard" element={<CreatorDashboard />} />
           <Route path="/library" element={<Library />} />

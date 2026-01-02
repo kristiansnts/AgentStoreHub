@@ -26,7 +26,7 @@ const Home: React.FC = () => {
             className="w-full bg-gray-100 dark:bg-gray-800 border-none rounded-full pl-10 pr-4 py-2.5 text-sm focus:ring-2 focus:ring-primary/20 transition-all"
           />
         </div>
-        <div className="relative">
+        <div className="relative cursor-pointer" onClick={() => navigate('/profile')}>
           <div className="size-10 rounded-full bg-gray-200 bg-cover bg-center border-2 border-white dark:border-gray-800" style={{ backgroundImage: `url('https://lh3.googleusercontent.com/aida-public/AB6AXuA4E7gfPKSogVgetWMX1BLu7lIPjp6M168KwobHGAFEoXNX20ElfXE-z3ZFgz56AfQw2h5vwQOgQTTVGe8OlCsaDz0Qv41dacdIVVOPO6XPdJgBoUdLuw48XDo00v6n3TisOQ_BU-3qjoWrNiPx3YWu_JpSKf4CQS00O0sXnnkEB-LHzhI4wPMSCCrdC9E8fLoYkMgzbPQwAT-fPlbGu1RsnwcdoEFyndlDIIXLtFF-WpFx5ptKem1oLakedhCHkPzhVx4VzdJnacI')` }} />
           <div className="absolute bottom-0 right-0 size-3 bg-green-500 border-2 border-white rounded-full"></div>
         </div>
@@ -39,8 +39,8 @@ const Home: React.FC = () => {
             key={cat}
             onClick={() => setActiveCategory(cat)}
             className={`snap-start flex-shrink-0 px-5 py-2 rounded-full text-sm font-medium transition-all ${activeCategory === cat
-                ? 'bg-primary text-white shadow-lg shadow-primary/25'
-                : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-50'
+              ? 'bg-primary text-white shadow-lg shadow-primary/25'
+              : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-50'
               }`}
           >
             {cat}
@@ -103,8 +103,8 @@ const Home: React.FC = () => {
               </div>
               <div className="flex-shrink-0">
                 <button className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all ${agent.isFree
-                    ? 'bg-primary/10 text-primary hover:bg-primary hover:text-white'
-                    : 'bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white hover:bg-gray-200'
+                  ? 'bg-primary/10 text-primary hover:bg-primary hover:text-white'
+                  : 'bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white hover:bg-gray-200'
                   }`}>
                   {agent.isFree ? 'GET' : agent.price}
                 </button>

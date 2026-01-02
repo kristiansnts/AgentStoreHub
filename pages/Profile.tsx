@@ -33,9 +33,7 @@ const Profile: React.FC = () => {
           <Icon name="arrow_back" />
         </button>
         <h1 className="flex-1 text-center text-lg font-bold">Profile Settings</h1>
-        <button className="size-10 flex items-center justify-center rounded-full hover:bg-black/5">
-          <Icon name="more_horiz" />
-        </button>
+        <div className="size-10"></div>
       </header>
 
       <main className="flex-1 overflow-y-auto px-4 pb-24 no-scrollbar">

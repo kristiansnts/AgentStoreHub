@@ -6,12 +6,14 @@ import { MOCK_AGENTS } from '../constants';
 
 interface AgentDetailProps {
   onSubscribe: (agent: any) => void;
+  subscribedAgents?: string[];
 }
 
-const AgentDetail = ({ onSubscribe }: AgentDetailProps) => {
+const AgentDetail = ({ onSubscribe, subscribedAgents = [] }: AgentDetailProps) => {
   const { id } = useParams();
   const navigate = useNavigate();
   const agent = MOCK_AGENTS.find(a => a.id === id);
+  const isSubscribed = id ? subscribedAgents.includes(id) : false;
 
   if (!agent) return <div>Agent not found</div>;
   return (
@@ -41,9 +43,16 @@ const AgentDetail = ({ onSubscribe }: AgentDetailProps) => {
               Your {agent.category} Assistant
             </p>
             <div className="flex items-center gap-2">
-              <Button variant="primary" onClick={() => onSubscribe(agent)} className="px-6 py-2 h-auto text-sm">
-                Subscribe
-              </Button>
+              {isSubscribed ? (
+                <Button variant="primary" onClick={() => navigate(`/chat/${agent.id}`)} className="px-6 py-2 h-auto text-sm bg-green-600 hover:bg-green-700">
+                  <Icon name="chat" className="mr-2 text-[18px]" />
+                  Chat
+                </Button>
+              ) : (
+                <Button variant="primary" onClick={() => onSubscribe(agent)} className="px-6 py-2 h-auto text-sm">
+                  Subscribe
+                </Button>
+              )}
               <Button variant="secondary" className="px-4 py-2 h-auto text-sm">
                 Open
               </Button>
@@ -135,9 +144,16 @@ const AgentDetail = ({ onSubscribe }: AgentDetailProps) => {
 
       {/* Full-width Sticky Footer */}
       <div className="fixed bottom-0 left-0 right-0 p-5 bg-white/95 dark:bg-gray-900/95 backdrop-blur-2xl border-t border-gray-200/50 dark:border-gray-700/50 z-50 shadow-[0_-4px_30px_rgb(0,0,0,0.05)] flex flex-col items-center max-w-md mx-auto">
-        <Button onClick={() => onSubscribe(agent)} className="w-full py-4 h-auto text-lg flex items-center justify-center gap-2 shadow-lg shadow-primary/20">
-          Subscribe <span className="opacity-70 font-normal">- {agent.price || '$9.99/mo'}</span>
-        </Button>
+        {isSubscribed ? (
+          <Button onClick={() => navigate(`/chat/${agent.id}`)} className="w-full py-4 h-auto text-lg flex items-center justify-center gap-2 shadow-lg shadow-green-500/20 bg-green-600 hover:bg-green-700 border-green-500">
+            <Icon name="chat" className="text-[20px]" />
+            Start Chatting with {agent.name}
+          </Button>
+        ) : (
+          <Button onClick={() => onSubscribe(agent)} className="w-full py-4 h-auto text-lg flex items-center justify-center gap-2 shadow-lg shadow-primary/20">
+            Subscribe <span className="opacity-70 font-normal">- {agent.price || '$9.99/mo'}</span>
+          </Button>
+        )}
         <div className="flex items-center gap-1.5 mt-3">
           <Icon name="verified_user" className="text-green-500 text-[14px]" filled />
           <p className="text-[10px] text-gray-400 font-bold uppercase tracking-wider">Cancel anytime • Secure SSL Payment</p>

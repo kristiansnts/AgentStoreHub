@@ -35,6 +35,7 @@ export interface SubscriptionData {
   price: number;
   isFree: boolean;
   agentName: string;
+  agentId?: string;
   phoneNumber?: string;
   platform?: 'WhatsApp' | 'Telegram' | 'G-Chat';
 }
@@ -55,4 +56,11 @@ export interface User {
   email: string;
   isCreator: boolean;
   avatarUrl: string;
+}
+
+export interface Message {
+  id: string;
+  text: string;
+  sender: 'user' | 'agent';
+  timestamp: string;
 }
