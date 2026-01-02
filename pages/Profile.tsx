@@ -183,6 +183,24 @@ const Profile: React.FC = () => {
             </Button>
           </div>
         </div>
+
+        {/* Logout Section */}
+        <div className="mt-6 mb-8">
+          <button
+            onClick={() => {
+              if (confirm('Are you sure you want to logout?')) {
+                // Clear any stored auth data
+                localStorage.removeItem('authToken');
+                // Navigate to welcome/login page
+                navigate('/welcome');
+              }
+            }}
+            className="w-full flex items-center justify-center gap-3 p-4 rounded-2xl bg-red-50 dark:bg-red-900/10 border border-red-100 dark:border-red-900/30 hover:bg-red-100 dark:hover:bg-red-900/20 active:scale-[0.98] transition-all group"
+          >
+            <Icon name="logout" className="text-[24px] text-red-600 dark:text-red-400" />
+            <span className="text-base font-bold text-red-600 dark:text-red-400">Logout</span>
+          </button>
+        </div>
       </main>
 
       {/* Edit Profile Modal */}
