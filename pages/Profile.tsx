@@ -6,13 +6,17 @@ import Button from '../components/Button';
 import EditProfile from '../components/EditProfile';
 import { UserProfile } from '../components/EditProfile/types';
 import WhatsAppConnect from '../components/WhatsAppConnect';
+import GoogleChatConnect from '../components/GoogleChatConnect';
 
 const Profile: React.FC = () => {
   const navigate = useNavigate();
   const [showEditProfile, setShowEditProfile] = useState(false);
   const [showWhatsAppConnect, setShowWhatsAppConnect] = useState(false);
   const [whatsappNumber, setWhatsappNumber] = useState<string | undefined>(undefined);
+  const [showGoogleChatConnect, setShowGoogleChatConnect] = useState(false);
+  const [googleEmail, setGoogleEmail] = useState<string | undefined>(undefined);
   const [showSuccessToast, setShowSuccessToast] = useState(false);
+  const [successMessage, setSuccessMessage] = useState('');
   const [userProfile, setUserProfile] = useState<UserProfile>({
     displayName: 'Alex Morgan',
     bio: 'AI enthusiast and prompt engineer building the future of autonomous agents.',
@@ -94,15 +98,20 @@ const Profile: React.FC = () => {
             </button>
             <div className="ml-20 h-px bg-gray-50 dark:bg-gray-800" />
 
-            {/* Google */}
-            <button className="flex w-full items-center justify-between p-4 hover:bg-gray-50 dark:hover:bg-gray-800 active:bg-gray-100 dark:active:bg-gray-700 transition-colors text-left group">
+            {/* Google Chat */}
+            <button
+              onClick={() => setShowGoogleChatConnect(true)}
+              className="flex w-full items-center justify-between p-4 hover:bg-gray-50 dark:hover:bg-gray-800 active:bg-gray-100 dark:active:bg-gray-700 transition-colors text-left group"
+            >
               <div className="flex items-center gap-4">
-                <div className="size-12 flex items-center justify-center rounded-xl bg-red-100 dark:bg-red-900/20 text-red-500 dark:text-red-400">
-                  <Icon name="account_circle" className="text-[24px]" />
+                <div className="size-12 flex items-center justify-center rounded-xl bg-blue-100 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400">
+                  <Icon name="chat_bubble" className="text-[24px]" />
                 </div>
                 <div className="flex flex-col">
-                  <span className="text-base font-bold text-text-main dark:text-white group-hover:text-primary transition-colors">Google</span>
-                  <span className="text-xs text-text-sub">Connected as alex.morgan@gmail.com</span>
+                  <span className="text-base font-bold text-text-main dark:text-white group-hover:text-primary transition-colors">Google Chat</span>
+                  <span className="text-xs text-text-sub">
+                    {googleEmail ? `Connected as ${googleEmail}` : 'Not connected'}
+                  </span>
                 </div>
               </div>
               <Icon name="chevron_right" className="text-gray-400" />
@@ -209,6 +218,7 @@ const Profile: React.FC = () => {
             onConnected={(phone) => {
               setWhatsappNumber(phone);
               setShowWhatsAppConnect(false);
+              setSuccessMessage('WhatsApp connected successfully!');
               setShowSuccessToast(true);
 
               // Auto hide toast after 5 seconds
@@ -221,12 +231,41 @@ const Profile: React.FC = () => {
         </div>
       )}
 
+      {/* Google Chat Connect Modal */}
+      {showGoogleChatConnect && (
+        <div className="fixed inset-0 z-[100] bg-white dark:bg-background-dark">
+          <GoogleChatConnect
+            initialScreen='connect'
+            initialProfile={{
+              name: userProfile.displayName,
+              email: userProfile.email,
+              avatar: userProfile.avatarUrl,
+              googleChat: googleEmail,
+              whatsapp: undefined,
+              telegram: undefined
+            }}
+            onConnected={(email) => {
+              setGoogleEmail(email);
+              setShowGoogleChatConnect(false);
+              setSuccessMessage('Google Chat connected successfully!');
+              setShowSuccessToast(true);
+
+              // Auto hide toast after 5 seconds
+              setTimeout(() => {
+                setShowSuccessToast(false);
+              }, 5000);
+            }}
+            onClose={() => setShowGoogleChatConnect(false)}
+          />
+        </div>
+      )}
+
       {/* Success Toast */}
       {showSuccessToast && (
         <div className="fixed bottom-24 left-4 right-4 z-[110] flex items-center justify-between gap-3 rounded-xl bg-text-main p-4 shadow-2xl shadow-black/30 dark:bg-gray-100 transition-all animate-in slide-in-from-bottom-5 duration-300">
           <div className="flex items-center gap-3">
             <Icon name="check_circle" className="text-[22px] text-green-400 dark:text-green-600" />
-            <span className="text-sm font-semibold text-white dark:text-text-main">WhatsApp connected successfully!</span>
+            <span className="text-sm font-semibold text-white dark:text-text-main">{successMessage}</span>
           </div>
           <button
             onClick={() => setShowSuccessToast(false)}
