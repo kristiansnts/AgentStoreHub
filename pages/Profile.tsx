@@ -7,6 +7,7 @@ import EditProfile from '../components/EditProfile';
 import { UserProfile } from '../components/EditProfile/types';
 import WhatsAppConnect from '../components/WhatsAppConnect';
 import GoogleChatConnect from '../components/GoogleChatConnect';
+import TelegramConnect from '../components/TelegramConnect';
 
 const Profile: React.FC = () => {
   const navigate = useNavigate();
@@ -15,6 +16,8 @@ const Profile: React.FC = () => {
   const [whatsappNumber, setWhatsappNumber] = useState<string | undefined>(undefined);
   const [showGoogleChatConnect, setShowGoogleChatConnect] = useState(false);
   const [googleEmail, setGoogleEmail] = useState<string | undefined>(undefined);
+  const [showTelegramConnect, setShowTelegramConnect] = useState(false);
+  const [telegramUsername, setTelegramUsername] = useState<string | undefined>(undefined);
   const [showSuccessToast, setShowSuccessToast] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
   const [userProfile, setUserProfile] = useState<UserProfile>({
@@ -84,14 +87,19 @@ const Profile: React.FC = () => {
             <div className="ml-20 h-px bg-gray-50 dark:bg-gray-800" />
 
             {/* Telegram */}
-            <button className="flex w-full items-center justify-between p-4 hover:bg-gray-50 dark:hover:bg-gray-800 active:bg-gray-100 dark:active:bg-gray-700 transition-colors text-left group">
+            <button
+              onClick={() => setShowTelegramConnect(true)}
+              className="flex w-full items-center justify-between p-4 hover:bg-gray-50 dark:hover:bg-gray-800 active:bg-gray-100 dark:active:bg-gray-700 transition-colors text-left group"
+            >
               <div className="flex items-center gap-4">
-                <div className="size-12 flex items-center justify-center rounded-xl bg-blue-100 dark:bg-blue-900/20 text-blue-500 dark:text-blue-400">
+                <div className="size-12 flex items-center justify-center rounded-xl bg-sky-100 dark:bg-sky-900/20 text-sky-600 dark:text-sky-400">
                   <Icon name="send" className="text-[24px]" />
                 </div>
                 <div className="flex flex-col">
                   <span className="text-base font-bold text-text-main dark:text-white group-hover:text-primary transition-colors">Telegram</span>
-                  <span className="text-xs text-text-sub">Connected as @alex_morgan</span>
+                  <span className="text-xs text-text-sub">
+                    {telegramUsername ? `Connected as ${telegramUsername}` : 'Not connected'}
+                  </span>
                 </div>
               </div>
               <Icon name="chevron_right" className="text-gray-400" />
@@ -256,6 +264,35 @@ const Profile: React.FC = () => {
               }, 5000);
             }}
             onClose={() => setShowGoogleChatConnect(false)}
+          />
+        </div>
+      )}
+
+      {/* Telegram Connect Modal */}
+      {showTelegramConnect && (
+        <div className="fixed inset-0 z-[100] bg-white dark:bg-background-dark">
+          <TelegramConnect
+            initialScreen='connect'
+            initialProfile={{
+              name: userProfile.displayName,
+              email: userProfile.email,
+              avatar: userProfile.avatarUrl,
+              telegram: telegramUsername,
+              whatsapp: undefined,
+              googleChat: undefined
+            }}
+            onConnected={(username) => {
+              setTelegramUsername(username);
+              setShowTelegramConnect(false);
+              setSuccessMessage('Telegram connected successfully!');
+              setShowSuccessToast(true);
+
+              // Auto hide toast after 5 seconds
+              setTimeout(() => {
+                setShowSuccessToast(false);
+              }, 5000);
+            }}
+            onClose={() => setShowTelegramConnect(false)}
           />
         </div>
       )}
